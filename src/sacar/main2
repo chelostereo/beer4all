@@ -1,0 +1,5 @@
+<tr><td colspan="2"><hr size="1" noshade="noshade"></td></tr>
+
+			<tr><td colspan="2" class="title"><tiles:getAsString name="title"/></td></tr>
+
+			<tr><td colspan="2"><hr size="1" noshade="noshade"></td></tr>

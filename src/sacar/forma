@@ -1,0 +1,4 @@
+<form action="/addproducto.do" method="post">
+					Cantidad: <input type="text" maxlength="3" size="3" name="cantidad" value="1"><br>
+					<input type="submit" value="Agregar al carrito"/>
+			</form>

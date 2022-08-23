@@ -1,0 +1,32 @@
+@import url("productos.css");
+@import url("carrito.css");
+body { background-color: white; }
+a:hover { 
+	color: blue;
+	text-decoration: underline;
+}
+.dark { background-color: black;}
+
+.black {
+    color: black;
+    font-family: verdana, arial, helvetica;
+    font-size: 11px;
+    text-decoration : none;
+}
+
+.menu {
+    color: black;
+	
+    font-family: verdana, arial, helvetica;
+    font-size: 11px;
+	font-weight: bold;
+    text-decoration : none;
+	
+}
+
+#breadcrumbs {
+	overflow: hidden;
+	background-image: url(../images/breadcrumbs.png);
+	background-repeat: repeat-x;
+	font-weight: bold;
+}

@@ -1,0 +1,41 @@
+
+table.carrito {
+	border: 1px solid #666;
+	width: 100%;
+	font-family: verdana, arial, helvetica;
+	font-size: 11;
+	color: black;
+}
+
+table.carrito thead {
+	background-color: #69c;
+	font-weight: bold;
+	color: white;
+}
+table.carrito tr.even {background-color: #fff;}
+table.carrito tr.odd {background-color: #def;}
+
+table.carrito td.imagen{
+	padding: 2px 4px 2px 4px !important;
+	text-align: center;
+	width: 5%;
+}
+
+table.carrito td.nombre{
+	padding: 2px 4px 2px 4px !important;
+	font-weight: bold;
+	text-align: left;
+	width: 50%;
+}
+
+table.carrito td.precio, th.precio{
+	text-align: center;
+	width: 15%;
+}
+
+
+tr.total td, tr.subtotal td {
+	color: white;
+	background-color: black;
+	font-weight: bold;
+}

@@ -1,0 +1,264 @@
+package beer4all.services;
+
+import javax.servlet.http.*;
+import java.sql.*;
+import java.util.ArrayList;
+
+import beer4all.Producto;
+import beer4all.Usuario;
+//import beer4all.MsgBean;
+
+public class ConnectionService {
+	
+	Connection con = null;
+	//MsgBean msgBean = new MsgBean();
+
+   	public ConnectionService() {
+		// REGISTER DRIVER 
+		try {Driver d = (Driver)Class.forName("com.mysql.jdbc.Driver").newInstance();} 
+		catch (Exception e) {
+		//msgBean.setMsgRegisterDriver(e.toString());
+		}
+
+		// GET CONNECTION
+		try{con = DriverManager.getConnection("jdbc:mysql://localhost/beer4all","","");}
+		catch(Exception e){
+		//msgBean.setMsgGetConnection(e.toString());
+		}
+	}
+	
+	public void destroy() {	
+		// Cierra la conexión con la BD.	
+		try {con.close();}
+		catch (Exception se) {}
+  	}
+
+	public ArrayList getListaProductos() {
+
+		// CREATE STATEMENT 
+		Statement stmt=null;
+		try {stmt = con.createStatement();} 
+		catch (Exception e){
+		//msgBean.setMsgCreateStatement(e.toString());
+		}
+		
+		// EXECUTE QUERY
+		ResultSet results = null;
+		try {results = stmt.executeQuery("select * from productos ORDER BY nombre"); }
+		catch (Exception e){
+		//msgBean.setMsgExecuteQuery(e.toString());
+		}
+
+		// GET ALL RESULTS 
+		ArrayList listaProductos = new ArrayList();
+		Producto producto = null;
+		try {
+			while (results.next()){
+				producto = new Producto();
+				producto.setId(results.getInt("id"));
+				producto.setNombre(results.getString("nombre"));
+				producto.setDescripcion(results.getString("descripcion"));
+				producto.setPrecioUnitario(results.getDouble("precio"));
+				producto.setImagenURL((results.getString("imagenURL")));
+				listaProductos.add(producto);
+			}
+			results.close();
+		}
+		catch (Exception e) {
+		//msgBean.setMsgGetAllResults(e.toString());
+		}
+		//listaProductos.add(msgBean);
+    	return (listaProductos);
+  	}
+
+  	public Producto getDetalleProducto(int productoID) {
+	
+		// CREATE STATEMENT 
+		Statement stmt=null;
+		try {stmt = con.createStatement();} 
+		catch (Exception e){
+		//msgBean.setMsgCreateStatement(e.toString());
+		}
+		
+		// EXECUTE QUERY
+		ResultSet results = null;
+		String id = java.lang.Integer.toString(productoID);
+		String query = "select * from productos where id = " + id;
+		try {results = stmt.executeQuery(query); }
+		catch (Exception e){
+		//msgBean.setMsgExecuteQuery(e.toString());
+		}
+
+		// GET ALL RESULTS 
+		//ArrayList lista = new ArrayList();
+		Producto producto = null;
+		try {
+			while (results.next()){
+				producto = new Producto();
+				producto.setId(results.getInt("id"));
+				producto.setNombre(results.getString("nombre"));
+				producto.setDescripcion(results.getString("descripcion"));
+				producto.setPrecioUnitario(results.getDouble("precio"));
+				producto.setImagenURL(results.getString("imagenURL"));				
+				//lista.add(producto);
+			}
+			results.close();
+		}
+		catch (Exception e) {
+		//msgBean.setMsgGetAllResults(e.toString());
+		}
+		//lista.add(msgBean);
+    	//return (lista);
+		return (producto);
+  	}
+
+  	public ArrayList searchProducto(String nombre) {
+
+		// CREATE STATEMENT 
+		Statement stmt=null;
+		try {stmt = con.createStatement();} 
+		catch (Exception e){
+		//msgBean.setMsgCreateStatement(e.toString());
+		}
+		
+		// EXECUTE QUERY
+		ResultSet results = null;
+		String query = "SELECT * FROM productos where nombre like '%"+nombre+"%' ORDER BY nombre";
+		try {results = stmt.executeQuery(query); }
+		catch (Exception e){
+		//msgBean.setMsgExecuteQuery(e.toString());
+		}
+
+		// GET ALL RESULTS 
+		ArrayList lista = new ArrayList();
+		Producto producto = null;
+		try {
+			while (results.next()){
+				producto = new Producto();
+				producto.setId(results.getInt("id"));
+				producto.setNombre(results.getString("nombre"));
+				producto.setDescripcion(results.getString("descripcion"));
+				producto.setPrecioUnitario(results.getDouble("precio"));
+				producto.setImagenURL((results.getString("imagenURL")));
+				//producto.setImagenURL((results.getString("imagenURL")).replace(".jpg","_small.gif"));
+				lista.add(producto);
+			}
+			results.close();
+		}
+		catch (Exception e) {
+		//msgBean.setMsgGetAllResults(e.toString());
+		}
+		//lista.add(msgBean);
+    	return (lista);
+	}
+	
+	public Usuario autenticarUsuario(String username, String password) {
+		
+		// CREATE STATEMENT 
+		PreparedStatement ps = null;
+		//String query = "SELECT * FROM USUARIOS WHERE username = ? AND PASSWORD = ?";
+		String query = "SELECT * FROM USUARIOS WHERE username = ?";
+		try {
+			ps = con.prepareStatement(query);
+			ps.setString(1, username);
+			ps.setString(2, password);
+		} 
+		catch (Exception e){
+		//msgBean.setMsgCreateStatement(e.toString());
+		}
+		
+		// EXECUTE QUERY
+		ResultSet results = null;
+		try {results = ps.executeQuery();}
+		catch (Exception e){
+		//msgBean.setMsgExecuteQuery(e.toString());
+		}
+	
+		// GET ALL RESULTS 
+		//ArrayList lista = new ArrayList();
+		Usuario usuario = null;
+		try {
+			if (results.next()){
+				
+				usuario = new Usuario();
+				usuario.setUsername(results.getString("username"));
+				usuario.setPassword(results.getString("password"));
+				usuario.setEmail(results.getString("email"));
+				usuario.setCantidad(results.getInt("cantidad"));
+				usuario.setConsumo(results.getDouble("consumo"));
+				
+				if (!password.equals(usuario.getPassword())) {
+					usuario = null;
+				}
+				
+				//lista.add(usuario);
+			}
+			results.close();
+		}
+		catch (Exception e) {//msgBean.setMsgGetAllResults(e.toString());}
+		}
+		//lista.add(msgBean);
+    	//return (lista);
+		return (usuario);
+	
+	}
+
+	public int registrarUsuario(Usuario usuario){
+	
+		// CREATE STATEMENT 
+		PreparedStatement ps = null;
+		String update = "insert into usuarios values (?,?,?,?,?)";
+		try {
+			ps = con.prepareStatement(update);
+			ps.setString(1, usuario.getUsername());
+			ps.setString(2, usuario.getPassword());
+			ps.setString(3, usuario.getEmail());
+			ps.setInt(4, 0);
+			ps.setDouble(5, 0);
+		} 
+		catch (Exception e){
+		//msgBean.setMsgCreateStatement(e.toString());
+		}
+	
+		 // EXECUTE UPDATE 
+		int resultados = 0;
+		try {
+			resultados = ps.executeUpdate();
+			resultados = 0;
+		} 
+		catch (SQLException e){
+			if (e.getErrorCode() == 1062) {resultados = -1;}
+		}
+		return (resultados);
+	}
+
+	public void updateUsuario(String username, int cantidad, double consumo){
+	
+		// CREATE PREPARED STATEMENT 
+		PreparedStatement prepstmt=null;
+		try {
+			prepstmt = con.prepareStatement("UPDATE usuarios SET cantidad=?, consumo=? WHERE username=?");
+		} 
+		catch (Exception e){}
+		
+		// SET PARAMETERS
+		try { 
+			prepstmt.setInt(1, cantidad); 
+			prepstmt.setDouble(2, consumo); 
+			prepstmt.setString(3, username); 
+		} 
+		catch (Exception e){} 
+		
+		// EXECUTE PREPARED SQL 
+		boolean ret = false; 
+		ResultSet results = null; 
+		int updateCount = 0; 
+		try { 
+			ret = prepstmt.execute(); 
+			if (ret == true) {results = prepstmt.getResultSet(); } 
+			else {updateCount = prepstmt.getUpdateCount();} 
+		} 
+		catch(Exception e){} 
+	}
+}
+		

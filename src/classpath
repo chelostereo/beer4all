@@ -1,0 +1,11 @@
+.;
+D:\dev;D:\Tomcat50\common\lib\servlet-api.jar;
+D:\Tomcat50\common\lib\jsp-api.jar;
+D:\Struts127\lib\struts.jar
+
+d:\java\mysql-connector-java-3.1.12-bin.jar;
+d:\java\commons-dbcp-1.2.1.jar;
+d:\java\commons-pool-1.2.jar;
+
+d:\java\commons-collections-3.1.jar;
+D:\java\JDBCTest1_03\classes;

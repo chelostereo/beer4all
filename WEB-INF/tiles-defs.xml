@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+ "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+ "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+<tiles-definitions>
+		<definition name=".mainLayout" path="/WEB-INF/tiles/main-layout.jsp">
+					<put name="title" value=""/>
+					<put name="header" value="/WEB-INF/tiles/header.jsp"/>
+					<put name="menu" value="/WEB-INF/tiles/menu.jsp"/>
+					<put name="menu-usuario" value="/WEB-INF/tiles/menu-usuario.jsp"/>
+					<put name="whoslogged" value="/WEB-INF/tiles/whoslogged.jsp"/>
+					<put name="body" value=""/>
+					<put name="footer" value="/WEB-INF/tiles/footer.jsp"/>
+		</definition>
+
+		<definition name="welcome.page" 
+					extends=".mainLayout">
+					<put 	name="title" value="Bienvenido a Beer4all"/>
+					<put 	name="body" value="/WEB-INF/tiles/body-welcome.jsp"/>
+		</definition>
+		
+		<definition name="productos.page" 
+					extends=".mainLayout">
+					<put 	name="title" value="Listado de cervezas"/>
+					<put 	name="body" value="/WEB-INF/tiles/body-productos.jsp"/>
+		</definition>
+		
+		<definition name="detalleproducto.page" 
+					extends=".mainLayout">
+					<put 	name="title" value="Datos de la cerveza"/>
+					<put 	name="body" value="/WEB-INF/tiles/body-detalleproducto.jsp"/>
+		</definition>
+		
+		<definition name="login.page" 
+					extends=".mainLayout">
+					<put 	name="title" value="Ingrese a Beer4all"/>
+					<put 	name="body" value="/WEB-INF/tiles/body-login.jsp"/>
+		</definition>
+
+		<definition name="viewperfil.page" 
+					extends=".mainLayout">
+					<put 	name="title" value="Datos del perfil de usuario"/>
+					<put 	name="menu" value="/WEB-INF/tiles/menu-usuario.jsp"/>
+					<put 	name="body" value="/WEB-INF/tiles/body-viewperfil.jsp"/>
+		</definition>
+		
+		<definition name="register.page" 
+					extends=".mainLayout">
+					<put 	name="title" value="Regístrese en Beer4all"/>
+					<put 	name="body" value="/WEB-INF/tiles/body-register.jsp"/>
+		</definition>
+
+		<definition name="register-ok.page" 
+					extends=".mainLayout">
+					<put 	name="title" value="¡¡ Bienvenido nuevo usuario !!"/>
+					<put 	name="body" value="/WEB-INF/tiles/body-register-ok.jsp"/>
+		</definition>
+
+		<definition name="publicidad.page" 
+					extends=".mainLayout">
+					<put 	name="title" value="Sitios amigos de Beer4all"/>
+					<put 	name="body" value="/WEB-INF/tiles/body-publicidad.jsp"/>
+		</definition>
+		
+		<definition name="viewcarrito.page" 
+					extends=".mainLayout">
+					<put 	name="title" value="Contenido del carrito"/>
+					<put 	name="menu" value="/WEB-INF/tiles/menu-usuario.jsp"/>							
+					<put 	name="body" value="/WEB-INF/tiles/body-viewcarrito.jsp"/>
+		</definition>
+
+		<definition name="buy-ok.page" 
+					extends=".mainLayout">
+					<put 	name="title" value="Cerveza en camino"/>
+					<put 	name="menu" value="/WEB-INF/tiles/menu-usuario.jsp"/>							
+					<put 	name="body" value="/WEB-INF/tiles/body-buy-ok.jsp"/>
+		</definition>
+		
+		<definition name="failure.page" 
+					extends=".mainLayout">
+					<put 	name="title" value="Error al recuperar la sesión"/>
+					<put 	name="menu" value="/WEB-INF/tiles/menu-usuario.jsp"/>							
+					<put 	name="body" value="/WEB-INF/tiles/body-failure.jsp"/>
+		</definition>
+</tiles-definitions>

@@ -1,0 +1,44 @@
+package beer4all.forms;
+
+import javax.servlet.http.*;
+import org.apache.struts.action.*;
+
+public class RandomForm extends ActionForm { 
+
+	private String imagenURL[];
+
+	public String getStringIndexed(int index) {return imagenURL[index];}
+    public void setStringIndexed(int index, String value) {imagenURL[index] = value;}
+    
+	
+	public void reset(ActionMapping mapping, HttpServletRequest request) {
+		final int CANTIDAD_IMAGENES = 5; // cantidad de imágenes que se muestran en la pagina.
+		final int TOTAL_IMAGENES = 6; 	// cantidad de imágenes que tengo para elegir.
+		String imagenes[] = { 			// es la cantidad de elementos del arreglo imagenes.
+			"duff.jpg",
+			"heineken.jpg",
+			"quilmes.jpg",
+			"schneider.jpg",
+			"guinness.jpg",
+			"iguana.gif"
+		};
+		boolean indices[] = new boolean[TOTAL_IMAGENES];		
+		int i = 0;
+		int numero = 0;
+
+		imagenURL = new String [CANTIDAD_IMAGENES];
+		for (i=0; i<TOTAL_IMAGENES; i++) {
+			indices[i] = false;
+		}
+		for (i=0; i<CANTIDAD_IMAGENES; i++) {
+			do {
+				numero = ((int)(Math.random()*10));
+				numero = (numero%TOTAL_IMAGENES);
+				if (!indices[numero]) {
+					imagenURL[i] = imagenes[numero];
+				}
+			} while (indices[numero]);
+			indices[numero]=true;
+		}
+	}
+}
